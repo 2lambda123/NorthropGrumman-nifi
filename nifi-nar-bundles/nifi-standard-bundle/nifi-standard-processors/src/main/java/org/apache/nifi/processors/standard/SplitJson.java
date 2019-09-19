@@ -186,7 +186,7 @@ public class SplitJson extends AbstractJsonPathProcessor {
         DocumentContext documentContext;
         try {
             documentContext = validateAndEstablishJsonContext(processSession, original);
-        } catch (InvalidJsonException e) {
+        } catch (InvalidJsonException | IllegalArgumentException e) {
             logger.error("FlowFile {} did not have valid JSON content.", new Object[]{original});
             processSession.transfer(original, REL_FAILURE);
             return;

@@ -43,6 +43,7 @@ public class TestSplitJson {
 
     private static final Path JSON_SNIPPET = Paths.get("src/test/resources/TestJson/json-sample.json");
     private static final Path XML_SNIPPET = Paths.get("src/test/resources/TestXml/xml-snippet.xml");
+    private static final Path NULL_SNIPPET = Paths.get("src/test/resources/TestJson/null-sample.json");
 
     @Test(expected = AssertionError.class)
     public void testInvalidJsonPath() {
@@ -64,6 +65,20 @@ public class TestSplitJson {
         final MockFlowFile out = testRunner.getFlowFilesForRelationship(SplitJson.REL_FAILURE).get(0);
         // Verify that the content was unchanged
         out.assertContentEquals(XML_SNIPPET);
+    }
+
+    @Test
+    public void testNullJson() throws Exception {
+        final TestRunner testRunner = TestRunners.newTestRunner(new SplitJson());
+        testRunner.setProperty(SplitJson.ARRAY_JSON_PATH_EXPRESSION, "$");
+
+        testRunner.enqueue(NULL_SNIPPET);
+        testRunner.run();
+
+        testRunner.assertAllFlowFilesTransferred(SplitJson.REL_FAILURE, 1);
+        final MockFlowFile out = testRunner.getFlowFilesForRelationship(SplitJson.REL_FAILURE).get(0);
+        // Verify that the content was unchanged
+        out.assertContentEquals(NULL_SNIPPET);
     }
 
     @Test
