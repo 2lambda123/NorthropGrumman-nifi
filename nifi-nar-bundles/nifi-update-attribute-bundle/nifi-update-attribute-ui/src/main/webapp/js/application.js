@@ -396,13 +396,15 @@ var ua = {
                                     // re-apply the rule filter
                                     ua.applyRuleFilter();
                                 }
+                            
+                                // close the dialog
+                                $('#new-rule-dialog').modal('hide');
+
                             }, function (error) {
                                 $('#ok-dialog-content').text(error);
                                 $('#ok-dialog').modal('setHeaderText', 'Configuration Error').modal('show');
                             });
 
-                            // close the dialog
-                            $('#new-rule-dialog').modal('hide');
                         }
                     }
                 }, {
