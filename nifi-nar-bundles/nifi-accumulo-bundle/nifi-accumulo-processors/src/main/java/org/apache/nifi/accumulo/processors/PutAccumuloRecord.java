@@ -534,7 +534,9 @@ public class PutAccumuloRecord extends BaseAccumuloProcessor {
                 FieldValue fv = result.getSelectedFields().findFirst().get();
                 visField = fv.getField();
                 if (null != visField)
-                fieldsToSkip.add(visField.getFieldName());
+                {
+                    fieldsToSkip.add(visField.getFieldName());
+                }
                 visSettings = (Map)fv.getValue();
             }
 
