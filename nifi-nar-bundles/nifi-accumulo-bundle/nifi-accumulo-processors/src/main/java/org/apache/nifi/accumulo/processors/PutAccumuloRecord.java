@@ -483,19 +483,20 @@ public class PutAccumuloRecord extends BaseAccumuloProcessor {
     }
 
     /**
-     * Creates a mutation with the provided arguments
-     * @param prevMutation previous mutation, to append to if in the same row.
-     * @param context process context.
-     * @param record record object extracted from the flow file
-     * @param schema schema for this record
-     * @param recordPath record path for visibility extraction
-     * @param flowFile flow file
-     * @param defaultVisibility default visibility
-     * @param config configuration of this instance.
-     * @return Returns the Mutation to insert
-     * @throws AccumuloSecurityException Error accessing Accumulo
-     * @throws AccumuloException Non security ( or table ) related Accumulo exceptions writing to the store.
-     * @throws TableNotFoundException Table not found on the cluster
+     * Creates a Mutation object based on the given parameters.
+     *
+     * @param prevMutation the previous Mutation object
+     * @param context the ProcessContext object
+     * @param record the Record object
+     * @param schema the RecordSchema object
+     * @param recordPath the RecordPath object
+     * @param flowFile the FlowFile object
+     * @param defaultVisibility the default visibility string
+     * @param config the AccumuloRecordConfiguration object
+     * @return the created Mutation object
+     * @throws AccumuloSecurityException if an error occurs related to Accumulo security
+     * @throws AccumuloException if an error occurs related to Accumulo
+     * @throws TableNotFoundException if the specified table is not found in Accumulo
      */
     protected Mutation createMutation(final Mutation prevMutation,
                                       final ProcessContext context,
