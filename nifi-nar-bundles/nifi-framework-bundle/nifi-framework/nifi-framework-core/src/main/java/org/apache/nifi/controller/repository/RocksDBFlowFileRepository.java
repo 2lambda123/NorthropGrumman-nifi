@@ -16,6 +16,7 @@
  */
 package org.apache.nifi.controller.repository;
 
+import io.github.pixee.security.ObjectInputFilters;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.nifi.controller.queue.FlowFileQueue;
 import org.apache.nifi.controller.repository.claim.ContentClaim;
@@ -411,6 +412,7 @@ public class RocksDBFlowFileRepository implements FlowFileRepository {
             if (swapLocationSuffixBytes != null) {
                 try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(swapLocationSuffixBytes);
                      ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
+                    ObjectInputFilters.enableObjectFilterIfUnprotected(objectInputStream);
                     Object o = objectInputStream.readObject();
                     if (o instanceof Collection) {
                         ((Collection<?>) o).forEach(obj -> swapLocationSuffixes.add(obj.toString()));
