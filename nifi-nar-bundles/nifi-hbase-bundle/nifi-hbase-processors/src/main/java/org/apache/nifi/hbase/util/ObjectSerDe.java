@@ -32,6 +32,14 @@ import java.io.OutputStream;
 public class ObjectSerDe implements Serializer<Object>, Deserializer<Object> {
 
     @Override
+    /**
+     * Deserialize the byte array input to an Object.
+     *
+     * @param input the byte array to deserialize
+     * @return the deserialized Object, or null if input is null or empty
+     * @throws DeserializationException if an error occurs during deserialization
+     * @throws IOException if an I/O error occurs
+     */
     public Object deserialize(byte[] input) throws DeserializationException, IOException {
         if (input == null || input.length == 0) {
             return null;
