@@ -467,6 +467,15 @@ public class GetHBase extends AbstractProcessor implements VisibilityFetchSuppor
         return ScanResult.fromFlatMap(stateMap.toMap());
     }
 
+    /**
+     * Retrieves the current state by checking the distributed cache and persistence file.
+     * If no previous result is available or the node just became primary, it pulls data from the distributed cache.
+     * It then checks the persistence file for the latest timestamp to avoid duplicating data.
+     *
+     * @param client the DistributedMapCacheClient used to interact with the distributed cache
+     * @return the ScanResult representing the current state
+     * @throws IOException if an I/O error occurs while interacting with the distributed cache or persistence file
+     */
     private ScanResult getState(final DistributedMapCacheClient client) throws IOException {
         final StringSerDe stringSerDe = new StringSerDe();
         final ObjectSerDe objectSerDe = new ObjectSerDe();
