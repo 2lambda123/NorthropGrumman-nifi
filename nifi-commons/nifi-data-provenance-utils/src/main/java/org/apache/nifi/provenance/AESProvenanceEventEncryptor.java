@@ -16,6 +16,7 @@
  */
 package org.apache.nifi.provenance;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -224,6 +225,7 @@ public class AESProvenanceEventEncryptor implements ProvenanceEventEncryptor {
         ByteArrayInputStream bais = new ByteArrayInputStream(encryptedRecord);
         bais.read();
         try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             return (EncryptionMetadata) ois.readObject();
         }
     }

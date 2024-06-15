@@ -16,6 +16,7 @@
  */
 package org.apache.nifi.hbase;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -494,6 +495,7 @@ public class GetHBase extends AbstractProcessor implements VisibilityFetchSuppor
             try (final InputStream fis = new FileInputStream(file);
                  final ObjectInputStream ois = new ObjectInputStream(fis)) {
 
+                ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
                 final Object obj = ois.readObject();
                 if (obj != null && (obj instanceof ScanResult)) {
                     final ScanResult localScanResult = (ScanResult) obj;

@@ -16,6 +16,7 @@
  */
 package org.apache.nifi.hbase.util;
 
+import io.github.pixee.security.ObjectInputFilters;
 import org.apache.nifi.distributed.cache.client.Deserializer;
 import org.apache.nifi.distributed.cache.client.Serializer;
 import org.apache.nifi.distributed.cache.client.exception.DeserializationException;
@@ -38,6 +39,7 @@ public class ObjectSerDe implements Serializer<Object>, Deserializer<Object> {
 
         try (final ByteArrayInputStream in = new ByteArrayInputStream(input);
              final ObjectInputStream objIn = new ObjectInputStream(in)) {
+            ObjectInputFilters.enableObjectFilterIfUnprotected(objIn);
             return objIn.readObject();
         } catch (ClassNotFoundException e) {
             throw new DeserializationException("Could not deserialize object due to ClassNotFoundException", e);

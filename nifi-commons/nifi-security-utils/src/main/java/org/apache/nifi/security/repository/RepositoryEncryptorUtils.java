@@ -16,6 +16,7 @@
  */
 package org.apache.nifi.security.repository;
 
+import io.github.pixee.security.ObjectInputFilters;
 import static org.apache.nifi.security.kms.CryptoUtils.isValidKeyProvider;
 
 import java.io.ByteArrayInputStream;
@@ -86,6 +87,7 @@ public class RepositoryEncryptorUtils {
         ByteArrayInputStream bais = new ByteArrayInputStream(encryptedRecord);
         // bais.read();
         try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             return (RepositoryObjectEncryptionMetadata) ois.readObject();
         }
     }
@@ -101,6 +103,7 @@ public class RepositoryEncryptorUtils {
         // TODO: May need to seek for EM_START_SENTINEL segment first
         encryptedRecord.read(new byte[CONTENT_HEADER_SIZE]);
         try (ObjectInputStream ois = new ObjectInputStream(new NonCloseableInputStream(encryptedRecord))) {
+            ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
             return (RepositoryObjectEncryptionMetadata) ois.readObject();
         }
     }
