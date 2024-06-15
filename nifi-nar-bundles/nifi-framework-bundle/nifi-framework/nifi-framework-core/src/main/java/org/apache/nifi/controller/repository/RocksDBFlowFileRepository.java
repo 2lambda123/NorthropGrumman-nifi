@@ -370,6 +370,13 @@ public class RocksDBFlowFileRepository implements FlowFileRepository {
     }
 
     @Override
+    /**
+     * Initializes the FlowFile Repository with the given ResourceClaimManager.
+     *
+     * @param claimManager the ResourceClaimManager to be used for initialization
+     * @throws IOException if an I/O error occurs during the initialization process
+     * @throws IllegalStateException if an unknown repository version is encountered
+     */
     public void initialize(final ResourceClaimManager claimManager) throws IOException {
         this.db.initialize();
         this.claimManager = claimManager;
