@@ -216,6 +216,15 @@ public class AESProvenanceEventEncryptor implements ProvenanceEventEncryptor {
         throw new KeyManagementException("No available key IDs");
     }
 
+    /**
+     * Extracts encryption metadata from the given encrypted record.
+     *
+     * @param encryptedRecord the byte array containing the encrypted record
+     * @return the EncryptionMetadata extracted from the encrypted record
+     * @throws EncryptionException if the encrypted record is too short to contain the metadata
+     * @throws IOException if an I/O error occurs while reading the encrypted record
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found
+     */
     private EncryptionMetadata extractEncryptionMetadata(byte[] encryptedRecord) throws EncryptionException, IOException, ClassNotFoundException {
         if (encryptedRecord == null || encryptedRecord.length < MIN_METADATA_LENGTH) {
             throw new EncryptionException("The encrypted record is too short to contain the metadata");

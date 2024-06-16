@@ -76,6 +76,15 @@ public class RepositoryEncryptorUtils {
         }
     }
 
+    /**
+     * Extracts encryption metadata from the given encrypted record.
+     *
+     * @param encryptedRecord the byte array representing the encrypted record
+     * @return the RepositoryObjectEncryptionMetadata extracted from the encrypted record
+     * @throws EncryptionException if the encrypted record is too short to contain the metadata
+     * @throws IOException if an I/O error occurs while reading the encrypted record
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found
+     */
     public static RepositoryObjectEncryptionMetadata extractEncryptionMetadata(byte[] encryptedRecord) throws EncryptionException, IOException, ClassNotFoundException {
         // TODO: Inject parser for min metadata length
         if (encryptedRecord == null || encryptedRecord.length < MIN_METADATA_LENGTH) {
@@ -92,6 +101,15 @@ public class RepositoryEncryptorUtils {
         }
     }
 
+    /**
+     * Extracts encryption metadata from the given input stream.
+     *
+     * @param encryptedRecord the input stream containing the encrypted record
+     * @return the RepositoryObjectEncryptionMetadata extracted from the input stream
+     * @throws EncryptionException if the encrypted record is too short to contain the metadata
+     * @throws IOException if an I/O error occurs while reading the input stream
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found
+     */
     public static RepositoryObjectEncryptionMetadata extractEncryptionMetadata(InputStream encryptedRecord) throws EncryptionException, IOException, ClassNotFoundException {
         // TODO: Inject parser for min metadata length
         if (encryptedRecord == null) {
