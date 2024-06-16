@@ -16,6 +16,7 @@
  */
 package org.apache.nifi.security.xml;
 
+import static io.github.pixee.security.XMLInputFactorySecurity.hardenFactory;
 import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -42,7 +43,7 @@ public class XmlUtils {
             throw new IllegalArgumentException("The provided source cannot be null");
         }
 
-        XMLInputFactory xif = XMLInputFactory.newFactory();
+        XMLInputFactory xif = hardenFactory(XMLInputFactory.newFactory());
         xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
         xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
         return xif.createXMLStreamReader(source);
