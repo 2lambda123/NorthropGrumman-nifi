@@ -17,6 +17,7 @@
 
 package org.apache.nifi.xml;
 
+import static io.github.pixee.security.XMLInputFactorySecurity.hardenFactory;
 import org.apache.nifi.logging.ComponentLog;
 import org.apache.nifi.serialization.MalformedRecordException;
 import org.apache.nifi.serialization.RecordReader;
@@ -82,7 +83,7 @@ public class XMLRecordReader implements RecordReader {
         LAZY_TIMESTAMP_FORMAT = () -> tsf;
 
         try {
-            final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+            final XMLInputFactory xmlInputFactory = hardenFactory(XMLInputFactory.newInstance());
 
             // Avoid XXE Vulnerabilities
             xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);

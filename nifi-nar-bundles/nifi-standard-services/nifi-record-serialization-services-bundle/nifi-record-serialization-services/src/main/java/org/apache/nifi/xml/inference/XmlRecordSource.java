@@ -16,6 +16,7 @@
  */
 package org.apache.nifi.xml.inference;
 
+import static io.github.pixee.security.XMLInputFactorySecurity.hardenFactory;
 import org.apache.nifi.schema.inference.RecordSource;
 
 import javax.xml.stream.XMLEventReader;
@@ -36,7 +37,7 @@ public class XmlRecordSource implements RecordSource<XmlNode> {
 
     public XmlRecordSource(final InputStream in, final boolean ignoreWrapper) throws IOException {
         try {
-            final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+            final XMLInputFactory xmlInputFactory = hardenFactory(XMLInputFactory.newInstance());
 
             // Avoid XXE Vulnerabilities
             xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
